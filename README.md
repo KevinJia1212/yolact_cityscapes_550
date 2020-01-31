@@ -1,7 +1,6 @@
 # yolact_cityscapes_550
 This project is modified from the original YOLACT network. In order to segment instances on the driving senarios, we train yolact-550 on CityScapes dataset for just 5 classes: Car, Pedestrian, truck, bus, rider.
 
-# **Y**ou **O**nly **L**ook **A**t **C**oefficien**T**s
 ```
     ██╗   ██╗ ██████╗ ██╗      █████╗  ██████╗████████╗
     ╚██╗ ██╔╝██╔═══██╗██║     ██╔══██╗██╔════╝╚══██╔══╝
