@@ -1,7 +1,7 @@
 from backbone import ResNetBackbone, VGGBackbone, ResNetBackboneGN, DarkNetBackbone
 from math import sqrt
 import torch
-
+import os
 # for making bounding boxes pretty
 COLORS = ((244,  67,  54),
           (233,  30,  99),
@@ -103,8 +103,8 @@ dataset_base = Config({
 ########################    CITYSCAPES    #####################
 cityscapes_dataset = dataset_base.copy({
     'name': 'Cityscapes_instance Dataset',
-    'train_images': '/home/kun/Cityscapes/train_images',
-    'train_info': '/home/kun/Cityscapes/train.json',
+    'train_images': '/home/kun222/Cityscapes/train_images',
+    'train_info': '/home/kun222/Cityscapes/train.json',
     'valid_images': '/home/kun/Cityscapes/val_images',
     'valid_info': '/home/kun/Cityscapes/val.json',
     'class_names': CITYSCAPES_CLASS,
@@ -576,7 +576,7 @@ yolact_base_cityscapes_config = cityscapes_base_config.copy({
     
     # Training params
     'lr_steps': (50000, 120000, 250000, 380000, 500000, 700000),
-    # 'lr_steps': (18000, 25000, 40000, 60000),
+    # 'lr_steps': (18000, 25000, 48000, 60000),
     'max_iter': 800000,
     
     # Backbone Settings
@@ -629,7 +629,10 @@ def set_cfg(config_name:str):
     if cfg.name is None:
         cfg.name = config_name.split('_config')[0]
 
-def set_dataset(dataset_name:str):
+def set_dataset(dataset_root:str):
     """ Sets the dataset of the current config. """
-    cfg.dataset = eval(dataset_name)
-    
+    # cfg.dataset = eval(dataset_name)
+    cfg.dataset.train_images = os.path.join(dataset_root, "train_images")
+    cfg.dataset.train_info = os.path.join(dataset_root, "train.json")
+    cfg.dataset.valid_images = os.path.join(dataset_root, "val_images")    
+    cfg.dataset.valid_info = os.path.join(dataset_root, "val.json")
