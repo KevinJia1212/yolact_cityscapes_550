@@ -103,10 +103,10 @@ dataset_base = Config({
 ########################    CITYSCAPES    #####################
 cityscapes_dataset = dataset_base.copy({
     'name': 'Cityscapes_instance Dataset',
-    'train_images': '/home/d205-kun/cityscapes/train/training_images',
-    'train_info': '/home/d205-kun/cityscapes/train/train.json',
-    'valid_images': '/home/kun/cityscapes_val/val_images',
-    'valid_info': '/home/kun/cityscapes_val/val_modified.json',
+    'train_images': '/home/kun/Cityscapes/train_images',
+    'train_info': '/home/kun/Cityscapes/train.json',
+    'valid_images': '/home/kun/Cityscapes/val_images',
+    'valid_info': '/home/kun/Cityscapes/val.json',
     'class_names': CITYSCAPES_CLASS,
     'label_map': CITYSCAPES_LABEL_MAP
 })
@@ -575,7 +575,7 @@ yolact_base_cityscapes_config = cityscapes_base_config.copy({
     # 'max_height': 420,
     
     # Training params
-    'lr_steps': (80000, 180000, 300000, 400000, 500000, 700000),
+    'lr_steps': (50000, 120000, 250000, 380000, 500000, 700000),
     # 'lr_steps': (18000, 25000, 40000, 60000),
     'max_iter': 800000,
     
@@ -584,7 +584,7 @@ yolact_base_cityscapes_config = cityscapes_base_config.copy({
         'selected_layers': list(range(1, 4)),
         'use_pixel_scales': True,
         'preapply_sqrt': False,
-        'use_square_anchors': True, # This is for backward compatability with a bug
+        'use_square_anchors': False, # This is for backward compatability with a bug
 
         'pred_aspect_ratios': [ [[1, 1/2, 2]] ]*5,
         'pred_scales': [[24], [48], [96], [192], [384]],
