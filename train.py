@@ -30,6 +30,8 @@ def str2bool(v):
 
 parser = argparse.ArgumentParser(
     description='Yolact Training Script')
+parser.add_argument('--dataset_dir', default=None, type=str,
+                    help='the root of cityscapes dataset')
 parser.add_argument('--batch_size', default=1, type=int,
                     help='Batch size for training')
 parser.add_argument('--resume', default=None, type=str,
@@ -56,18 +58,16 @@ parser.add_argument('--log_folder', default='logs/',
                     help='Directory for saving logs.')
 parser.add_argument('--config', default=None,
                     help='The config object to use.')
-parser.add_argument('--save_interval', default=5000, type=int,
+parser.add_argument('--save_interval', default=10000, type=int,
                     help='The number of iterations between saving the model.')
 parser.add_argument('--validation_size', default=5000, type=int,
                     help='The number of images to use for validation.')
-parser.add_argument('--validation_epoch', default=2, type=int,
+parser.add_argument('--validation_epoch', default=3, type=int,
                     help='Output validation information every n iterations. If -1, do no validation.')
 parser.add_argument('--keep_latest', dest='keep_latest', action='store_true',
                     help='Only keep the latest checkpoint instead of each one.')
 parser.add_argument('--keep_latest_interval', default=100000, type=int,
                     help='When --keep_latest is on, don\'t delete the latest file at these intervals. This should be a multiple of save_interval or 0.')
-parser.add_argument('--dataset', default=None, type=str,
-                    help='If specified, override the dataset specified in the config with this one (example: coco2017_dataset).')
 parser.add_argument('--no_log', dest='log', action='store_false',
                     help='Don\'t log per iteration information into log_folder.')
 parser.add_argument('--log_gpu', dest='log_gpu', action='store_true',
@@ -87,8 +87,8 @@ args = parser.parse_args()
 if args.config is not None:
     set_cfg(args.config)
 
-if args.dataset is not None:
-    set_dataset(args.dataset)
+if args.dataset_dir is not None:
+    set_dataset(args.dataset_dir)
 
 if args.autoscale and args.batch_size != 8:
     factor = args.batch_size / 8
