@@ -210,7 +210,6 @@ def train():
         print('Resuming training, loading {}...'.format(args.resume))
         if args.init_from == 'yolact':
             yolact_net.load_weights(args.resume)
-
         elif args.init_from == 'coco':
             if args.start_iter == 0:
 	    	yolact_net.init_weights_from_pth(args.resume)
@@ -265,6 +264,7 @@ def train():
     # loss counters
     loc_loss = 0
     conf_loss = 0
+    interval_time = 0
     iteration = max(args.start_iter, 0)
     last_time = time.time()
 
@@ -351,6 +351,7 @@ def train():
 
                 cur_time  = time.time()
                 elapsed   = cur_time - last_time
+                interval_time += elapsed
                 last_time = cur_time
 
                 # Exclude graph setup from the timing information
@@ -363,8 +364,9 @@ def train():
                     total = sum([loss_avgs[k].get_avg() for k in losses])
                     loss_labels = sum([[k, loss_avgs[k].get_avg()] for k in loss_types if k in losses], [])
                     
-                    print(('[%3d] %7d ||' + (' %s: %.3f |' * len(losses)) + ' T: %.3f || ETA: %s || timer: %.3f')
-                            % tuple([epoch, iteration] + loss_labels + [total, eta_str, elapsed]), flush=True)
+                    print(('[%3d] %7d ||' + (' %s: %.3f |' * len(losses)) + ' T: %.3f || ETA: %s || timer: %.3f || lr: %.2g')
+                            % tuple([epoch, iteration] + loss_labels + [total, eta_str, interval_time, cur_lr]), flush=True)
+		    interval_time = 0
 
                 if args.log:
                     precision = 5
