@@ -337,7 +337,7 @@ cityscapes_base_config = Config({
     'max_num_detections': 100,
 
     # dw' = momentum * dw - lr * (grad + decay * w)
-    'lr': 1e-5,
+    'lr': 1e-4,
     'momentum': 0.9,
     'decay': 5e-4,
 
@@ -575,9 +575,9 @@ yolact_base_cityscapes_config = cityscapes_base_config.copy({
     # 'max_height': 420,
     
     # Training params
-    'lr_steps': (50000, 120000, 250000, 380000, 500000, 700000),
-    # 'lr_steps': (18000, 25000, 48000, 60000),
-    'max_iter': 800000,
+    #'lr_steps': (50000, 120000, 250000, 380000, 500000, 700000),
+     'lr_steps': (13000, 18000, 22000, 28000),
+    'max_iter': 80000,
     
     # Backbone Settings
     'backbone': resnet101_backbone.copy({

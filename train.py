@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/aistudio/external-libraries')
 from data import *
 from utils.augmentations import SSDAugmentation, BaseTransform
 from utils.functions import MovingAverage, SavePath
@@ -6,7 +8,6 @@ from utils import timer
 from layers.modules import MultiBoxLoss
 from yolact import Yolact
 import os
-import sys
 import time
 import math, random
 from pathlib import Path
@@ -58,7 +59,7 @@ parser.add_argument('--log_folder', default='logs/',
                     help='Directory for saving logs.')
 parser.add_argument('--config', default=None,
                     help='The config object to use.')
-parser.add_argument('--save_interval', default=10000, type=int,
+parser.add_argument('--save_interval', default=5000, type=int,
                     help='The number of iterations between saving the model.')
 parser.add_argument('--validation_size', default=5000, type=int,
                     help='The number of images to use for validation.')
@@ -211,8 +212,10 @@ def train():
             yolact_net.load_weights(args.resume)
 
         elif args.init_from == 'coco':
-            yolact_net.init_weights_from_pth(args.resume)
-            # yolact_net.load_weights(args.resume)
+            if args.start_iter == 0:
+	    	yolact_net.init_weights_from_pth(args.resume)
+            else: 
+		yolact_net.load_weights(args.resume)
             param_to_train = ['prediction_layers.0.bbox_layer.weight', 'prediction_layers.0.bbox_layer.bias', 'prediction_layers.0.conf_layer.weight',
                                 'prediction_layers.0.conf_layer.bias', 'prediction_layers.0.mask_layer.weight', 'prediction_layers.0.mask_layer.bias',
                                 'semantic_seg_conv.weight', 'semantic_seg_conv.bias']
