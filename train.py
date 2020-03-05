@@ -366,7 +366,7 @@ def train():
                     
                     print(('[%3d] %7d ||' + (' %s: %.3f |' * len(losses)) + ' T: %.3f || ETA: %s || timer: %.3f || lr: %.2g')
                             % tuple([epoch, iteration] + loss_labels + [total, eta_str, interval_time, cur_lr]), flush=True)
-		    interval_time = 0
+                    interval_time = 0
 
                 if args.log:
                     precision = 5
