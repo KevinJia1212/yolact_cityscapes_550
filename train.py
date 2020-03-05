@@ -212,9 +212,9 @@ def train():
             yolact_net.load_weights(args.resume)
         elif args.init_from == 'coco':
             if args.start_iter == 0:
-	    	yolact_net.init_weights_from_pth(args.resume)
+	    	    yolact_net.init_weights_from_pth(args.resume)
             else: 
-		yolact_net.load_weights(args.resume)
+		        yolact_net.load_weights(args.resume)
             param_to_train = ['prediction_layers.0.bbox_layer.weight', 'prediction_layers.0.bbox_layer.bias', 'prediction_layers.0.conf_layer.weight',
                                 'prediction_layers.0.conf_layer.bias', 'prediction_layers.0.mask_layer.weight', 'prediction_layers.0.mask_layer.bias',
                                 'semantic_seg_conv.weight', 'semantic_seg_conv.bias']
